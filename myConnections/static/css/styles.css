@@ -1,0 +1,54 @@
+html {
+    height: 100%;
+}
+
+body {
+    background: linear-gradient(rgb(156, 207, 236), rgb(59, 204, 114));
+    padding-top: 50px;
+    min-height: 100%;
+    overflow: hidden;
+    height: auto;
+}
+
+.main-nav {
+    background-color: #46464b;
+    display: flex;
+    list-style: none;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    margin-bottom: 40px;
+    z-index: 9999;
+    font-size: 30px;
+}
+
+.main-nav li {
+    margin: 10px;
+}
+
+.main-nav li a {
+    color: white;
+    text-decoration: none;
+}
+
+#home {
+    font-style: italic;
+}
+
+.push {
+    margin-left: auto;
+    margin-right: 0.3em;
+}
+
+.btn-link {
+    height: 50px;
+    font-weight: bold;
+    border-radius: 10px;
+    margin: 40px;
+    cursor: pointer;
+    width: 150px;
+}

@@ -1,0 +1,39 @@
+.form-container {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.form-wrapper {
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 40px;
+    padding: 10px;
+    width: 60%;
+    text-align: center;
+    font-family: Cambria;
+}
+
+label {
+    display: block;
+}
+
+input {
+    margin: 5px;
+}
+
+ul {
+    text-align: center;
+    list-style-type: none;
+    color: rgb(204, 86, 86);
+    font-size: 12px;
+}
+
+span {
+    font-style: italic;
+    padding: 10px;
+}
+
+#signup-btn {
+    background-color: moccasin;
+}

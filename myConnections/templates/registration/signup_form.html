@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block css %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/signup_form.css' %} ">
+{% endblock css %}
+{% block content %}
+
+    <div class="form-container">
+        <div class="form-wrapper">
+            <h2>Sign up as {{ user_type }}</h2>
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ next }}">
+                {{ form|safe|linebreaksbr }}
+                <br>
+                <button type="submit" class="btn-link" id="signup-btn">Create {{ user_type }}</button>
+            </form>
+        </div>
+    </div>
+{% endblock content %}
