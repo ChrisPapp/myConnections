@@ -7,13 +7,12 @@
 
     <div class="form-container">
         <div class="form-wrapper">
-            <h2>Sign up as {{ user_type }}</h2>
+            <h2>Please login</h2>
             <form method="post">
                 {% csrf_token %}
-                <input type="hidden" name="next" value="{{ next }}">
                 {{ form|safe|linebreaksbr }}
                 <br>
-                <button type="submit" class="btn-link" id="signup-btn">Create {{ user_type }}</button>
+                <button type="submit" class="btn-link" id="login-btn">Login</button>
             </form>
         </div>
     </div>

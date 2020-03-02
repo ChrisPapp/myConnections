@@ -31,5 +31,5 @@ class OrganisationSignUpView(CreateView):
         context["user_type"] = 'Organisation'
         return context
     
-    
-
+def logout_message(request):
+    return render(request, 'registration/logout_message.html')

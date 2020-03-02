@@ -2,7 +2,7 @@
     height: 100%;
     display: flex;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
 }
 
 .form-wrapper {
@@ -36,4 +36,8 @@ span {
 
 #signup-btn {
     background-color: moccasin;
+}
+
+#login-btn {
+    background-color: rgb(64, 175, 64);
 }

@@ -7,7 +7,7 @@ body {
     padding-top: 50px;
     min-height: 100%;
     overflow: hidden;
-    height: auto;
+    height: 100%;
 }
 
 .main-nav {
@@ -23,11 +23,13 @@ body {
     left: 0;
     margin-bottom: 40px;
     z-index: 9999;
-    font-size: 30px;
+    font-size: 2em;
+    font-family: 'Roboto Condensed';
 }
 
 .main-nav li {
     margin: 10px;
+    padding-left: 10px;
 }
 
 .main-nav li a {
@@ -51,4 +53,10 @@ body {
     margin: 40px;
     cursor: pointer;
     width: 150px;
+}
+
+#nav-name {
+    font-size: 0.8em;
+    color: rgb(226, 14, 14);
+    font-style: italic;
 }
