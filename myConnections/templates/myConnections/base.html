@@ -16,18 +16,22 @@
 <body>
     <nav>
         <ul class=main-nav>
-            <li id="home"><a href="{% url 'my_connections:index' %}" ;>MyConnections</a></li>
-            <div class="push" style="display:flex;">
+
                 {% if request.user.is_authenticated %}
                     {% if request.user.is_person %}
                         <li><a href="{% url 'my_connections:person' pk=user.person.pk %}"> <span id="nav-name">{{ request.user.first_name }}</span></a></li>
-                        <li><a href="{% url 'my_connections:connections' %}">Connections</a></li>
+                        <li id="home"><a href="{% url 'my_connections:connections' %}">MyConnections</a></li>
                     {% elif request.user.is_organisation %}
                         <li><a href="{% url 'my_connections:organisation' pk=user.organisation.pk %}"> <span id="nav-name">{{ request.user.organisation.name }}</span></a></li>     
-                    {% endif %}             
-                    <li><a href="{% url 'my_connections:logout' %}">Logout</a></li>
-                {% else %}      
-                    <li><a href="{% url 'my_connections:login' %}">Login</a></li>
+                    {% endif %}
+                    <div class="push" style="display:flex;">        
+                        <li><a href="{% url 'my_connections:logout' %}">Logout</a></li>
+                    </div>
+                {% else %}   
+                    <div class="push" style="display:flex;">  
+                        <li><a href="{% url 'my_connections:register_prompt' %}">Register</a></li> 
+                        <li><a href="{% url 'my_connections:login' %}">Login</a></li>
+                    </div>
                 {% endif %}
             </div>
         </ul>

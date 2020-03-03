@@ -13,11 +13,15 @@ from myConnections.decorators import person_required
 
 def index(request):
     if (not request.user.is_authenticated) :
-        return render(request, 'index.html')
+        return redirect(reverse('my_connections:register_prompt'))
     elif (request.user.is_person):
         return redirect(reverse('my_connections:person', kwargs= {'pk': request.user.person.pk}))
     elif (request.user.is_organisation):
         return redirect(reverse('my_connections:organisation', kwargs= {'pk': request.user.organisation.pk}))
+
+
+def register_prompt(request):
+    return render(request, 'register_prompt.html')
 
 class PersonSignUpView(CreateView):
     model = User

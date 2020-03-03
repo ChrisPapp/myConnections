@@ -1,32 +1,27 @@
-from django.contrib.auth import REDIRECT_FIELD_NAME
-from django.contrib.auth.decorators import user_passes_test
+from django.http import HttpResponseForbidden
 
 
-def person_required(function=None, redirect_field_name=REDIRECT_FIELD_NAME, login_url='login'):
+def person_required(f):
     '''
     Decorator for views that checks that the logged in user is a student,
     redirects to the log-in page if necessary.
     '''
-    actual_decorator = user_passes_test(
-        lambda u: u.is_active and u.is_person,
-        login_url=login_url,
-        redirect_field_name=redirect_field_name
-    )
-    if function:
-        return actual_decorator(function)
-    return actual_decorator
+    def user_is_person(request, *args, **kwargs):
+        if not request.user.is_person:
+            return HttpResponseForbidden("<h1 style='font-weight: bolder;'>FORBIDDEN</h1>")
+        return f(request, *args, **kwargs)
+    
+    return user_is_person
 
 
-def organisation_required(function=None, redirect_field_name=REDIRECT_FIELD_NAME, login_url='login'):
+def organisation_required(f):
     '''
-    Decorator for views that checks that the logged in user is a teacher,
+    Decorator for views that checks that the logged in user is a student,
     redirects to the log-in page if necessary.
     '''
-    actual_decorator = user_passes_test(
-        lambda u: u.is_active and u.is_organisation,
-        login_url=login_url,
-        redirect_field_name=redirect_field_name
-    )
-    if function:
-        return actual_decorator(function)
-    return actual_decorator
+    def user_is_organisation(request, *args, **kwargs):
+        if not request.is_organisation:
+            return HttpResponseForbidden("<h1 style='font-weight: bolder;'>FORBIDDEN</h1>")
+        return f(request, *args, **kwargs)
+
+    return user_is_organisation
