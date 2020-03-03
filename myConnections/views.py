@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth import login
 from django.shortcuts import redirect
+from django.contrib.auth.mixins import UserPassesTestMixin
 from django.views.generic import CreateView, DetailView
 from myConnections.models import User,Person,Organisation
 from myConnections.forms import PersonSignUpForm, OrganisationSignUpForm
@@ -42,8 +43,41 @@ class OrganisationSignUpView(CreateView):
 def logout_message(request):
     return render(request, 'registration/logout_message.html')
 
-class PersonDetailView(DetailView):
+class PersonDetailView(UserPassesTestMixin, DetailView):
     model = Person
+    login_url = reverse_lazy('my_connections:login')
 
-class OrganisationDetailView(DetailView):
+    def test_func(self):
+        # if not logged, go to login page
+        if not self.request.user:
+            return False
+
+        # If logged in but has no access, show "Forbidden" page
+        self.raise_exception = True
+
+        # A person can view only their own profile
+        if self.request.user.is_person:
+            return self.request.user.person.pk == self.kwargs['pk']
+        
+        # An organisation can only see the profiles of their accounts
+        if self.request.user.is_organisation:
+            return self.request.user.organisation.accounts.filter(pk=self.kwargs['pk'])
+class OrganisationDetailView(UserPassesTestMixin, DetailView):
     model = Organisation
+    login_url = reverse_lazy('my_connections:login')
+
+    def test_func(self):
+        # if not logged, go to login page
+        if not self.request.user:
+            return False
+
+        # If logged in but has no access, show "Forbidden" page
+        self.raise_exception = True
+
+        # A person can view only their related organisations
+        if self.request.user.is_person:
+            return self.request.user.person.relationships.filter(pk=self.kwargs['pk'])
+        
+        # An organisation can only see their own profile
+        if self.request.user.is_organisation:
+            return self.request.user.organisation.pk == self.kwargs['pk']
