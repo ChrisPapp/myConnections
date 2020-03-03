@@ -7,6 +7,10 @@ from django.db import transaction
 
 class PersonSignUpForm(UserCreationForm):
 
+    profile_image = forms.ImageField()
+    birth_date = forms.DateField()
+    city = forms.CharField(max_length=128)
+
     class Meta(UserCreationForm.Meta):
         model=User
         fields=('username', 'password1', 'password2', 'first_name', 'last_name')
@@ -16,7 +20,7 @@ class PersonSignUpForm(UserCreationForm):
         user = super().save(commit=False)
         user.is_person = True
         user.save()
-        person = Person.objects.create(user=user)
+        person = Person.objects.create(user=user, profile_pic=self.cleaned_data.get('profile_image'), birth_date=self.cleaned_data.get('birth_date'), city=self.cleaned_data.get('city'))
         return user
 
     def form_valid(self, form):
@@ -27,7 +31,8 @@ class PersonSignUpForm(UserCreationForm):
 class OrganisationSignUpForm(UserCreationForm):
 
     name = forms.CharField(max_length=128, required=True)
-    company_site = forms.URLField()
+    company_site = forms.URLField(required=False)
+    logo = forms.ImageField()
 
     class Meta(UserCreationForm.Meta):
         model=User
@@ -38,7 +43,7 @@ class OrganisationSignUpForm(UserCreationForm):
         user.is_organisation = True
         user.save()
         user.refresh_from_db()
-        organisation = Organisation.objects.create(user=user, name=self.cleaned_data.get('name'), company_site=self.cleaned_data.get('company_site'))
+        organisation = Organisation.objects.create(user=user, name=self.cleaned_data.get('name'), company_site=self.cleaned_data.get('company_site'), logo=self.cleaned_data.get('logo'))
         return user
 
     def form_valid(self, form):

@@ -19,6 +19,7 @@ class Organisation(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=64)
     company_site = models.URLField()
+    logo = models.ImageField(upload_to='profiles')
 
     def __str__(self):
         return self.name
@@ -30,12 +31,18 @@ class Organisation(models.Model):
 class Person(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     relationships = models.ManyToManyField(Organisation, related_name='accounts')
+    profile_pic = models.ImageField(upload_to='profiles')
+    birth_date = models.DateField()
+    city = models.CharField(max_length=128)
 
     def get_absolute_url(self):
         return reverse("index", kwargs={"pk": self.pk})
+    
+    def get_full_name(self):
+        return self.user.first_name + ' ' + self.user.last_name
 
     def __str__(self):
-        return self.user.first_name + ' ' + self.user.last_name
+        return self.get_full_name()
 
 class Entry(models.Model):
     person = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='entries', default=None)

@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>my_connections</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/styles.css' %} ">
+    <link rel="stylesheet" href="{% static 'myConnections/css/styles.css' %} ">
     <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
     {% block css %}
     {% endblock css %}
 </head>
@@ -18,7 +19,11 @@
             <li id="home"><a href="{% url 'my_connections:index' %}" ;>MyConnections</a></li>
             <div class="push" style="display:flex;">
                 {% if request.user.is_authenticated %}
-                    <li><a href="{% url 'my_connections:index' %}"> <span id="nav-name">{{ request.user.person. }}</span></a></li>
+                    {% if request.user.is_person %}
+                        <li><a href="{% url 'my_connections:person' pk=user.person.pk %}"> <span id="nav-name">{{ request.user.first_name }}</span></a></li>
+                    {% elif request.user.is_organisation %}
+                        <li><a href="{% url 'my_connections:organisation' pk=user.organisation.pk %}"> <span id="nav-name">{{ request.user.organisation.name }}</span></a></li>     
+                    {% endif %}             
                     <li><a href="{% url 'my_connections:logout' %}">Logout</a></li>
                 {% else %}      
                     <li><a href="{% url 'my_connections:login' %}">Login</a></li>

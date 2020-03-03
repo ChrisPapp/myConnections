@@ -1,0 +1,53 @@
+.container {
+    height: 90%;
+    display: flex;
+    justify-content: space-around;
+    padding: 50px;
+    align-items: flex-start;
+}
+
+.bubble {
+    width: 40%;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#profile {
+    background-color: rgb(50, 53, 182);
+}
+
+#organisation {
+    background-color: rgb(92, 167, 122);
+}
+
+.header {
+    text-align: center;
+    color: rgb(0, 0, 0);
+}
+
+.info {
+    text-align: center;
+    color: white;
+    margin: 10px;
+}
+
+img {
+    max-width: 25%;
+    max-height: 5%;
+    margin: 10px;
+}
+
+h3 {
+    font-family: 'Roboto Condensed';
+    text-decoration: underline;
+}
+
+p {
+    font-weight: bold;
+}
+
+#organisation p {
+    color: black;
+}

@@ -1,16 +1,15 @@
 {% extends 'base.html' %}
 {% block css %}
 {% load static %}
-<link rel="stylesheet" href="{% static 'css/registration.css' %} ">
+<link rel="stylesheet" href="{% static 'myConnections/css/registration.css' %} ">
 {% endblock css %}
 {% block content %}
 
     <div class="form-container">
         <div class="form-wrapper">
             <h2>Sign up as {{ user_type }}</h2>
-            <form method="post">
+            <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-                <input type="hidden" name="next" value="{{ next }}">
                 {{ form|safe|linebreaksbr }}
                 <br>
                 <button type="submit" class="btn-link" id="signup-btn">Create {{ user_type }}</button>

@@ -60,3 +60,7 @@ body {
     color: rgb(226, 14, 14);
     font-style: italic;
 }
+
+h1 {
+    font-family: 'Open Sans', sans-serif;
+}

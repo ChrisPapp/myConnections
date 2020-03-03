@@ -2,7 +2,7 @@
 
 {% block css %}
  {% load static %}
-<link rel="stylesheet" href="{% static 'css/index.css' %} ">
+<link rel="stylesheet" href="{% static 'myConnections/css/index.css' %} ">
 {% endblock css %}
 
 {% block content %}
@@ -12,7 +12,7 @@
         <h3>You must be a registered user to use this app. Please <a href="#">login</a>...<h3>
         <h3>... or register as:</h3>
         <div id="register-options"> 
-            <button type="button" class="btn-link" id="person" onclick="location.href='{% url 'my_connections:student_signup' %}'">Person</button>
+            <button type="button" class="btn-link" id="person" onclick="location.href='{% url 'my_connections:person_signup' %}'">Person</button>
             <button type="button" class="btn-link" id="organisation" onclick="location.href='{% url 'my_connections:organisation_signup' %}'">Organisation</button>
         </div>
     </div>

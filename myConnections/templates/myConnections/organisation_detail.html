@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block css %}
+ {% load static %}
+<link rel="stylesheet" href="{% static 'myConnections/css/profile.css' %} ">
+{% endblock css %}
+
+{% block content %}
+
+<h1 class="header">Organisation Information</h1>
+<div class="container">
+
+    <div id="organisation" class="bubble">
+        <img src="{{ organisation.logo.url }}"></img>
+        <div class="info">
+            <h3>Name</h3>
+            <p>{{ organisation.name}}</p>
+        </div>
+        <div class="info">
+            <h3>Company Site</h3>
+            <p>{{ organisation.company_site }}</p>
+        </div>
+        <div class="info">
+            <h3>Relationship count</h3>
+            <p>{{ organisation.accounts.all.count }}</p>
+        </div>
+    </div>
+    </div>
+</div>
+{% endblock content %}
