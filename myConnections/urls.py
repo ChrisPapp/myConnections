@@ -14,5 +14,6 @@ urlpatterns = [
     path('organisation/<int:pk>/', views.OrganisationDetailView.as_view(), name='organisation'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('logout_message/', views.logout_message, name='logout_message'),
+    path('connections', views.connections, name='connections'),
 ]
 

@@ -21,6 +21,7 @@
                 {% if request.user.is_authenticated %}
                     {% if request.user.is_person %}
                         <li><a href="{% url 'my_connections:person' pk=user.person.pk %}"> <span id="nav-name">{{ request.user.first_name }}</span></a></li>
+                        <li><a href="{% url 'my_connections:connections' %}">Connections</a></li>
                     {% elif request.user.is_organisation %}
                         <li><a href="{% url 'my_connections:organisation' pk=user.organisation.pk %}"> <span id="nav-name">{{ request.user.organisation.name }}</span></a></li>     
                     {% endif %}             

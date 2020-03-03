@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block css %}
+ {% load static %}
+<link rel="stylesheet" href="{% static 'myConnections/css/profile.css' %} ">
+{% endblock css %}
+
+{% block content %}
+
+<h1 class="header">Connections</h1>
+<div class="container">
+    <div class="bubble" id="connections" style="width: 90%; flex-direction: row; flex-wrap: wrap; justify-content: center; max-height: 75%; overflow-y:auto;">
+        {% for organisation in user.person.relationships.all %}
+            <div class="connection">
+                <a href="{% url 'my_connections:organisation' pk=organisation.pk %}">
+ 
+                    <img src="{{ organisation.logo.url }}"></img>
+                    <p>{{ organisation.name }}</p>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}

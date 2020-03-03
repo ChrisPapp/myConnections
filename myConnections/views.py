@@ -1,12 +1,13 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth import login
 from django.shortcuts import redirect
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.views.generic import CreateView, DetailView
 from myConnections.models import User,Person,Organisation
 from myConnections.forms import PersonSignUpForm, OrganisationSignUpForm
+from myConnections.decorators import person_required
 
 # Create your views here.
 
@@ -81,3 +82,9 @@ class OrganisationDetailView(UserPassesTestMixin, DetailView):
         # An organisation can only see their own profile
         if self.request.user.is_organisation:
             return self.request.user.organisation.pk == self.kwargs['pk']
+
+
+@login_required
+@person_required
+def connections(request):
+    return render(request, 'connections.html')
