@@ -1,12 +1,13 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth import login
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
+from django.http import Http404
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import UserPassesTestMixin
-from django.views.generic import CreateView, DetailView
-from myConnections.models import User,Person,Organisation
-from myConnections.forms import PersonSignUpForm, OrganisationSignUpForm
+from django.contrib.auth.mixins import UserPassesTestMixin,LoginRequiredMixin
+from django.views.generic import CreateView, DetailView, View, TemplateView, FormView
+from myConnections.models import User,Person,Organisation, Invite, Entry
+from myConnections.forms import PersonSignUpForm, OrganisationSignUpForm, EnterCodeForm
 from myConnections.decorators import person_required
 
 # Create your views here.
@@ -18,6 +19,8 @@ def index(request):
         return redirect(reverse('my_connections:person', kwargs= {'pk': request.user.person.pk}))
     elif (request.user.is_organisation):
         return redirect(reverse('my_connections:organisation', kwargs= {'pk': request.user.organisation.pk}))
+    else:
+        return redirect('my_connections:logout')
 
 
 def register_prompt(request):
@@ -92,3 +95,62 @@ class OrganisationDetailView(UserPassesTestMixin, DetailView):
 @person_required
 def connections(request):
     return render(request, 'connections.html')
+
+
+class InviteCreateView(LoginRequiredMixin, View):
+    model = Invite
+    login_url = reverse_lazy('my_connections:login')
+    def get(self, request, *args, **kwargs):
+        invite = Invite(by=request.user)
+        self.uuid = invite.code
+        invite.save()
+        return redirect(reverse_lazy('my_connections:invite_success', kwargs={'uuid': self.uuid}))
+    
+
+class InviteSuccessView(LoginRequiredMixin, DetailView):
+    template_name = 'myConnections/invite_success.html'
+    login_url = reverse_lazy('my_connections:login')
+
+    def get_object(self):
+        invite = get_object_or_404(Invite, code=self.kwargs['uuid'])
+        if invite and invite.by != self.request.user:
+            raise Http404()
+        return invite
+
+class EnterCodeView(LoginRequiredMixin, FormView):
+    template_name ='myConnections/enter_code.html'
+    form_class = EnterCodeForm
+    success_url = reverse_lazy('my_connections:code_success')
+
+    def form_valid(self, form):
+        code = form.cleaned_data.get('code')
+        try:
+            invite = Invite.objects.get(code=code)
+            by_user = invite.by
+
+            # Invides should be sent between person and organisations
+            if (self.request.user.is_person and by_user.is_person) or (self.request.user.is_organisation and by_user.is_organisation):
+                raise Http404()
+            if (invite.is_expired()):
+                # We are done with this invite
+                invite.delete()
+                return redirect(reverse_lazy('my_connections:code_expired'))
+            # Organisation invites person to create connection
+            if (by_user.is_organisation):
+                by_user.organisation.accounts.add(self.request.user.person)
+            else: # Person wants to be identified
+                if (by_user.person in self.request.user.organisation.accounts.all()):
+                    Entry.objects.create(person=by_user.person, organisation=self.request.user.organisation)
+                else:
+                    raise Http404()
+            # We are done with this invite
+            invite.delete()
+        except Invite.DoesNotExist:
+            raise Http404()
+        return super().form_valid(form)
+
+class SuccessCodeView(LoginRequiredMixin, TemplateView):
+    template_name='myConnections/code_success.html'
+
+class ExpiredCodeView(LoginRequiredMixin, TemplateView):
+    template_name='myConnections/code_expired.html'

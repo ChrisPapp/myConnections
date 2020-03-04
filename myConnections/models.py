@@ -47,7 +47,7 @@ class Person(models.Model):
 class Entry(models.Model):
     person = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='entries', default=None)
     organisation = models.ForeignKey(Organisation, on_delete=models.CASCADE, related_name='entries', default=None)
-    date_confirmed = models.DateTimeField(blank=True, null=True)
+    date_confirmed = models.DateTimeField(blank=True, null=True, default=timezone.now)
 
     def __str__(self):
         if self.organisation:
@@ -55,8 +55,17 @@ class Entry(models.Model):
         else:
             return '{} requesting entry'.format(self.person.user.username)
 
-class AccessCode(models.Model):
-    entry = models.OneToOneField(Entry, on_delete=models.CASCADE, related_name='access_code')
-    code =  models.UUIDField(default=uuid.uuid4().hex[:6], editable=False, unique=True) # Create 6 digit code
+class Invite(models.Model):
+    by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='invites')
+    code =  models.UUIDField(default=uuid.uuid4, editable=False, unique=True) # Create 6 digit code
     date_attempted = models.DateTimeField(blank=True, null=True, default=timezone.now)
 
+    def is_expired(self):
+        now = timezone.now()
+        diff = now - self.date_attempted
+        # Codes created by person expire in 5 minutes (300 seconds)
+        if self.by.is_person:
+            return diff.seconds > 300
+        # Codes created by organisations expire in 1 day
+        else:
+            return diff.days >= 1

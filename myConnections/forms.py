@@ -50,3 +50,6 @@ class OrganisationSignUpForm(UserCreationForm):
         user = form.save()
         login(self.request, user)
         return redirect('my_connections:index')
+
+class EnterCodeForm(forms.Form):
+    code = forms.UUIDField(label="Your code goes here")

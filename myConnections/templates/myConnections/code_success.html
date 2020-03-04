@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block css %}
+ {% load static %}
+<link rel="stylesheet" href="{% static 'myConnections/css/profile.css' %} ">
+{% endblock css %}
+
+{% block content %}
+
+<h1 class="header">Success!</h1>
+<div class="container">
+
+    <div id="profile" class="bubble">
+        <div class="info">
+        {% if request.user.is_person %}
+            <p style='font-style:italic; margin-top: 40px;'>Connection created successfully. See your <a href="{% url 'my_connections:connections' %}" style='color:red;'>connections</a></p>
+        {% else %}
+            <p style='font-style:italic;'>Person identified successfully</p>
+        {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock content %}

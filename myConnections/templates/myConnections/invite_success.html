@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block css %}
+ {% load static %}
+<link rel="stylesheet" href="{% static 'myConnections/css/profile.css' %} ">
+{% endblock css %}
+
+{% block content %}
+
+<h1 class="header">Code created successfully!</h1>
+<div class="container">
+
+    <div id="profile" class="bubble">
+        <div class="info">
+            <h3>Invite code:</h3>
+            <p>{{ invite.code }}</p>
+        {% if request.user.is_person %}
+            <p style='font-style:italic; margin-top: 40px;'>Send this code to the Organisation to get identified</p>
+            <p style='font-style:italic; text-decoration:underline;'>The code will expire in 5 minutes</p>
+        {% else %}
+            <p style='font-style:italic;'>Send this code to the Person you want to connect with</p>
+            <p style='font-style:italic; text-decoration:underline;'>The code will expire in a day</p>
+        {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock content %}

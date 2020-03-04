@@ -21,16 +21,20 @@
                     {% if request.user.is_person %}
                         <li><a href="{% url 'my_connections:person' pk=user.person.pk %}"> <span id="nav-name">{{ request.user.first_name }}</span></a></li>
                         <li id="home"><a href="{% url 'my_connections:connections' %}">MyConnections</a></li>
+                        <li id="home"><a href="{% url 'my_connections:enter_code' %}">Add Connection</a></li>
                     {% elif request.user.is_organisation %}
-                        <li><a href="{% url 'my_connections:organisation' pk=user.organisation.pk %}"> <span id="nav-name">{{ request.user.organisation.name }}</span></a></li>     
+                        <li><a href="{% url 'my_connections:organisation' pk=user.organisation.pk %}"> <span id="nav-name">{{ request.user.organisation.name }}</span></a></li>
+                        <li id="home"><a href="{% url 'my_connections:entries' %}">Entries</a></li>   
+                        <li id="home"><a href="{% url 'my_connections:enter_code' %}">Add Entry</a></li>   
                     {% endif %}
+                    <li id="home"><a href="{% url 'my_connections:invite' %}">Create Code</a></li>
                     <div class="push" style="display:flex;">        
-                        <li><a href="{% url 'my_connections:logout' %}">Logout</a></li>
+                        <li id="home"><a href="{% url 'my_connections:logout' %}">Logout</a></li>
                     </div>
                 {% else %}   
                     <div class="push" style="display:flex;">  
-                        <li><a href="{% url 'my_connections:register_prompt' %}">Register</a></li> 
-                        <li><a href="{% url 'my_connections:login' %}">Login</a></li>
+                        <li id="home"><a href="{% url 'my_connections:register_prompt' %}">Register</a></li> 
+                        <li id="home"><a href="{% url 'my_connections:login' %}">Login</a></li>
                     </div>
                 {% endif %}
             </div>

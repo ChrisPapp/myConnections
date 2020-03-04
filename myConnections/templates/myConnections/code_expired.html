@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block css %}
+ {% load static %}
+<link rel="stylesheet" href="{% static 'myConnections/css/profile.css' %} ">
+{% endblock css %}
+
+{% block content %}
+
+<h1 class="header">Too late!</h1>
+<div class="container">
+
+    <div id="profile" class="bubble">
+        <div class="info">
+            <p style='font-style:italic; margin-top: 40px;'>The code has expired...</p>
+        </div>
+    </div>
+</div>
+{% endblock content %}

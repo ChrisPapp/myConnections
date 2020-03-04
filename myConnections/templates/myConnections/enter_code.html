@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block css %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'myConnections/css/registration.css' %} ">
+{% endblock css %}
+{% block content %}
+
+    <div class="form-container">
+        <div class="form-wrapper">
+            <h2>Enter code</h2>
+            <form method="post">
+                {% csrf_token %}
+                {{ form|safe|linebreaksbr }}
+                <br>
+                <button type="submit" class="btn-link" id="signup-btn">Submit Code</button>
+            </form>
+        </div>
+    </div>
+{% endblock content %}
