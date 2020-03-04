@@ -49,6 +49,9 @@ class Entry(models.Model):
     organisation = models.ForeignKey(Organisation, on_delete=models.CASCADE, related_name='entries', default=None)
     date_confirmed = models.DateTimeField(blank=True, null=True, default=timezone.now)
 
+    class Meta:
+        ordering= ['-date_confirmed']
+
     def __str__(self):
         if self.organisation:
             return '{} entered {}'.format(self.person.user.username, self.organisation.name)

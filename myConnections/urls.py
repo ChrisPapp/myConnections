@@ -21,6 +21,6 @@ urlpatterns = [
     path('enter_code/', views.EnterCodeView.as_view(), name='enter_code'),
     path('code_success/', views.SuccessCodeView.as_view(), name='code_success'),
     path('code_expired/', views.ExpiredCodeView.as_view(), name='code_expired'),
-    path('entries/', views.ExpiredCodeView.as_view(), name='entries'),
+    path('entries/', views.entries, name='entries'),
 ]
 

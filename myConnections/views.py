@@ -8,7 +8,7 @@ from django.contrib.auth.mixins import UserPassesTestMixin,LoginRequiredMixin
 from django.views.generic import CreateView, DetailView, View, TemplateView, FormView
 from myConnections.models import User,Person,Organisation, Invite, Entry
 from myConnections.forms import PersonSignUpForm, OrganisationSignUpForm, EnterCodeForm
-from myConnections.decorators import person_required
+from myConnections.decorators import person_required, organisation_required
 
 # Create your views here.
 
@@ -154,3 +154,8 @@ class SuccessCodeView(LoginRequiredMixin, TemplateView):
 
 class ExpiredCodeView(LoginRequiredMixin, TemplateView):
     template_name='myConnections/code_expired.html'
+
+@login_required
+@organisation_required
+def entries(request):
+    return render(request, 'myConnections/entries.html')

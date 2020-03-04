@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block css %}
+ {% load static %}
+<link rel="stylesheet" href="{% static 'myConnections/css/profile.css' %} ">
+{% endblock css %}
+
+{% block content %}
+
+<h1 class="header">Connections</h1>
+<div class="container">
+    <div class="bubble" id="entries" style="width: 90%; flex-direction: row; flex-wrap: wrap; justify-content: center; max-height: 75%; overflow-y:auto;">
+        {% for entry in request.user.organisation.entries.all %}
+            <div class="entry">
+                    <img src="{{ entry.person.profile_pic.url }}"></img>
+                    <div class='entry-field'>
+                        <h3>Name:</h3>
+                        <p>{{ entry.person.get_full_name }}</p>
+                    </div>
+                    <div class='entry-field'>
+                        <h3>Date:</h3>
+                        <p>{{ entry.date_confirmed|date:"l j F Y \a\t H:i:s" }}</p>
+                    </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}

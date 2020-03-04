@@ -84,3 +84,36 @@ p {
     text-align: center;
     text-decoration: none;
 }
+
+#entries {
+    background-color: rgb(116, 172, 5);
+}
+
+.entry {
+    padding: 30px;
+    margin: 40px;
+    border-radius: 80px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.15);
+}
+
+.entry-field {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.entry-field p {
+    color: white;
+    margin: 10px;
+}
+
+.entry img {
+    max-height: 5%;
+    max-width: 5%;
+    border-radius: 40%;
+}

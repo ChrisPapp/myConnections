@@ -20,7 +20,7 @@ def organisation_required(f):
     redirects to the log-in page if necessary.
     '''
     def user_is_organisation(request, *args, **kwargs):
-        if not request.is_organisation:
+        if not request.user.is_organisation:
             return HttpResponseForbidden("<h1 style='font-weight: bolder;'>FORBIDDEN</h1>")
         return f(request, *args, **kwargs)
 
