@@ -1,7 +1,7 @@
 # myConnections
 This is a project for a course of the Department of Management Science and Technology in the Athens University of Economics and Business
 
-Is a platform that allows Organisations to check whether a Person is connected with them.
+myConnections is a platform that allows Organisations to check whether a Person is connected with them.
 
 Use case:
 A university registers as an "Organisation", and the student as Person.
